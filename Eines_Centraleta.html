@@ -12,7 +12,6 @@
             --accent-color: #f9a825;
             --text-dark: #2c3e50;
             --text-light: #ffffff;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
@@ -34,11 +33,11 @@
         }
         
         header {
-            background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
             padding: 20px 0;
             position: relative;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             margin-bottom: 40px;
         }
         
@@ -86,53 +85,37 @@
             padding: 0 20px 60px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            gap: 40px;
         }
         
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-            height: 100%;
+        .item {
             display: flex;
             flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: var(--transition);
+            position: relative;
             cursor: pointer;
         }
         
-        .card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        .item:hover {
+            transform: translateY(-10px);
         }
         
-        .card:hover .card-img {
+        .item:hover .item-img {
             transform: scale(1.05);
         }
         
-        .card-img-container {
-            height: 220px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .item-img {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 25px;
             transition: transform 0.5s ease;
         }
         
-        .card-content {
-            padding: 25px 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        .card-title {
+        .item-title {
             font-size: 1.4rem;
             color: var(--primary-color);
             font-weight: 700;
@@ -141,47 +124,23 @@
             padding-bottom: 15px;
         }
         
-        .card-title::after {
+        .item-title::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 50px;
             height: 3px;
             background-color: var(--accent-color);
             border-radius: 1.5px;
         }
         
-        .card-description {
+        .item-description {
             color: var(--text-dark);
             opacity: 0.8;
             margin-bottom: 20px;
             font-size: 0.95rem;
-        }
-        
-        .card-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 24px;
-            background-color: var(--primary-color);
-            color: var(--text-light);
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            margin-top: auto;
-            gap: 8px;
-        }
-        
-        .card-button:hover {
-            background-color: #1b5e20;
-            transform: translateY(-2px);
-        }
-        
-        .card-button i {
-            font-size: 0.9rem;
         }
         
         .floating-logo {
@@ -241,11 +200,17 @@
             }
             
             .container {
-                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 30px;
             }
             
-            .card-img-container {
-                height: 180px;
+            .item-img {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .item-title {
+                font-size: 1.2rem;
             }
             
             .floating-logo {
@@ -266,11 +231,12 @@
             
             .container {
                 padding: 0 15px 40px;
-                gap: 20px;
+                grid-template-columns: 1fr;
             }
             
-            .card-title {
-                font-size: 1.2rem;
+            .item-img {
+                width: 140px;
+                height: 140px;
             }
             
             .leaf-decoration {
@@ -290,23 +256,23 @@
             }
         }
         
-        .header-content, .card {
+        .header-content, .item {
             animation: fadeInUp 0.8s ease forwards;
         }
         
-        .card:nth-child(2) {
+        .item:nth-child(2) {
             animation-delay: 0.1s;
         }
         
-        .card:nth-child(3) {
+        .item:nth-child(3) {
             animation-delay: 0.2s;
         }
         
-        .card:nth-child(4) {
+        .item:nth-child(4) {
             animation-delay: 0.3s;
         }
         
-        .card:nth-child(5) {
+        .item:nth-child(5) {
             animation-delay: 0.4s;
         }
     </style>
@@ -324,95 +290,60 @@
     </header>
     
     <div class="container">
-        <div class="card" onclick="window.open('https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_EDITOR_GALERIA_MAPA.png', '_blank')">
-            <div class="card-img-container">
-                <img class="card-img" src="https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_EDITOR_GALERIA_MAPA.png" alt="Editor de galeria botànica">
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Editor de Galeria Botànica</h2>
-                <p class="card-description">Eina per gestionar i editar el contingut de la galeria botànica del campus. Afegeix noves espècies, actualitza informació i organitza el catàleg.</p>
-                <a href="https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_EDITOR_GALERIA_MAPA.png" class="card-button" target="_blank">
-                    Accedir <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
+        <div class="item" onclick="window.open('https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_EDITOR_GALERIA_MAPA.png', '_blank')">
+            <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_EDITOR_GALERIA_MAPA.png" alt="Editor de galeria botànica">
+            <h2 class="item-title">Editor de Galeria Botànica</h2>
+            <p class="item-description">Eina per gestionar i editar el contingut de la galeria botànica del campus. Afegeix noves espècies, actualitza informació i organitza el catàleg.</p>
         </div>
         
-        <div class="card" onclick="window.open('https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_GALERIA_MAPA.png', '_blank')">
-            <div class="card-img-container">
-                <img class="card-img" src="https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_GALERIA_MAPA.png" alt="Galeria i Mapa Botànic">
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Galeria i Mapa Botànic</h2>
-                <p class="card-description">Explora la diversitat botànica del campus de la UAB a través d'una galeria interactiva i un mapa detallat amb la ubicació de cada espècie.</p>
-                <a href="https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_GALERIA_MAPA.png" class="card-button" target="_blank">
-                    Explorar <i class="fas fa-map-marked-alt"></i>
-                </a>
-            </div>
+        <div class="item" onclick="window.open('https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_GALERIA_MAPA.png', '_blank')">
+            <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_GALERIA_MAPA.png" alt="Galeria i Mapa Botànic">
+            <h2 class="item-title">Galeria i Mapa Botànic</h2>
+            <p class="item-description">Explora la diversitat botànica del campus de la UAB a través d'una galeria interactiva i un mapa detallat amb la ubicació de cada espècie.</p>
         </div>
         
-        <div class="card" onclick="window.open('https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_INATALACIO_WORDPRESS.png', '_blank')">
-            <div class="card-img-container">
-                <img class="card-img" src="https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_INATALACIO_WORDPRESS.png" alt="Guia d'instal·lació WordPress">
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Guia d'Instal·lació WordPress</h2>
-                <p class="card-description">Manual pas a pas per a la instal·lació i configuració del sistema WordPress per al projecte de Galeria i Mapa Botànic del campus.</p>
-                <a href="https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_INATALACIO_WORDPRESS.png" class="card-button" target="_blank">
-                    Consultar <i class="fas fa-book"></i>
-                </a>
-            </div>
+        <div class="item" onclick="window.open('https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_INATALACIO_WORDPRESS.png', '_blank')">
+            <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_INATALACIO_WORDPRESS.png" alt="Guia d'instal·lació WordPress">
+            <h2 class="item-title">Guia d'Instal·lació WordPress</h2>
+            <p class="item-description">Manual pas a pas per a la instal·lació i configuració del sistema WordPress per al projecte de Galeria i Mapa Botànic del campus.</p>
         </div>
         
-        <div class="card" onclick="window.open('https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_SUS.png', '_blank')">
-            <div class="card-img-container">
-                <img class="card-img" src="https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_SUS.png" alt="SUS">
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">System Usability Scale</h2>
-                <p class="card-description">Eina d'avaluació de la usabilitat del sistema. Contribueix a la millora contínua del projecte mitjançant la teva valoració i comentaris.</p>
-                <a href="https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_SUS.png" class="card-button" target="_blank">
-                    Avaluar <i class="fas fa-clipboard-check"></i>
-                </a>
-            </div>
+        <div class="item" onclick="window.open('https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_SUS.png', '_blank')">
+            <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_SUS.png" alt="SUS">
+            <h2 class="item-title">System Usability Scale</h2>
+            <p class="item-description">Eina d'avaluació de la usabilitat del sistema. Contribueix a la millora contínua del projecte mitjançant la teva valoració i comentaris.</p>
         </div>
         
-        <div class="card" onclick="window.open('https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_MEMORIA.png', '_blank')">
-            <div class="card-img-container">
-                <img class="card-img" src="https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_MEMORIA.png" alt="Memòria del projecte">
-            </div>
-            <div class="card-content">
-                <h2 class="card-title">Memòria del Projecte</h2>
-                <p class="card-description">Document complet amb tota la informació sobre el desenvolupament del projecte, objectius, metodologia i resultats obtinguts.</p>
-                <a href="https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_MEMORIA.png" class="card-button" target="_blank">
-                    Llegir <i class="fas fa-file-alt"></i>
-                </a>
-            </div>
+        <div class="item" onclick="window.open('https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_MEMORIA.png', '_blank')">
+            <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_MEMORIA.png" alt="Memòria del projecte">
+            <h2 class="item-title">Memòria del Projecte</h2>
+            <p class="item-description">Document complet amb tota la informació sobre el desenvolupament del projecte, objectius, metodologia i resultats obtinguts.</p>
         </div>
     </div>
 
     <a href="#" class="floating-logo-container">
-        <img src="https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025/blob/main/imatges/LOGO_TFG_LLETRA.png" alt="Logo UAB Botànic" class="floating-logo">
+        <img src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_TFG_LLETRA.png" alt="Logo UAB Botànic" class="floating-logo">
     </a>
 
     <script>
-        // Afegim interactivitat als cards per a millor experiència mòbil
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('click', function() {
-                const link = this.querySelector('.card-button').getAttribute('href');
-                window.open(link, '_blank');
+        // Afegim interactivitat als elements
+        document.querySelectorAll('.item').forEach(item => {
+            item.addEventListener('click', function() {
+                const url = this.getAttribute('onclick').split("'")[1];
+                window.open(url, '_blank');
             });
         });
         
         // Animació suau en scroll
         window.addEventListener('scroll', () => {
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                const cardPosition = card.getBoundingClientRect().top;
+            const items = document.querySelectorAll('.item');
+            items.forEach(item => {
+                const itemPosition = item.getBoundingClientRect().top;
                 const screenPosition = window.innerHeight / 1.3;
                 
-                if (cardPosition < screenPosition) {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
+                if (itemPosition < screenPosition) {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
                 }
             });
         });

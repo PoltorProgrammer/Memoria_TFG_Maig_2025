@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TFG: Galeria i Mapa Botànic del Campus UAB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2d5a27;
+            --secondary-green: #4a9960;
+            --accent-green: #6ab04c;
+            --light-green: #a8e6a3;
+            --uab-blue: #003d6b;
+            --uab-gold: #f5b800;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --shadow-light: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-medium: 0 8px 30px rgba(0,0,0,0.12);
+            --shadow-heavy: 0 20px 60px rgba(0,0,0,0.15);
+            --gradient-primary: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 50%, var(--accent-green) 100%);
+            --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: var(--dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            background-color: var(--light);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-green);
+            border-radius: 10px;
+            border: 2px solid var(--light);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-green);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Enhanced Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: 
+                linear-gradient(135deg, rgba(45, 90, 39, 0.85) 0%, rgba(74, 153, 96, 0.75) 50%, rgba(106, 176, 76, 0.85) 100%),
+                url('https://natura.ues.cat/sites/default/files/styles/imatge_ampliada/public/users/FonsDocumental/2021-04-18%20Rodal%20-%20UAB%20229.JPG?itok=1BfhuX6K') center/cover;
+            color: white;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="botanical" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><g opacity="0.15"><circle cx="10" cy="10" r="2" fill="white"/><circle cx="30" cy="30" r="1.5" fill="white"/><path d="M15,15 Q20,10 25,15 Q20,20 15,15" fill="white"/><path d="M35,5 C38,8 38,12 35,15" fill="white" stroke="white" stroke-width="0.5"/></g></pattern></defs><rect fill="url(%23botanical)" width="100" height="100"/></svg>');
+            animation: floatPattern 30s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes floatPattern {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-15px) rotate(1deg); }
+            66% { transform: translateY(-10px) rotate(-1deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            animation: heroSlideUp 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        @keyframes heroSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .uab-logo-link {
+            display: block;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 2.5rem;
+            transition: all 0.4s ease;
+            animation: logoFloat 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        .uab-logo-link::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 4px;
+            background: var(--uab-gold);
+            border-radius: 2px;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .uab-logo-link:hover {
+            transform: scale(1.15);
+        }
+
+        .uab-logo-link:hover::after {
+            width: 60px;
+            opacity: 1;
+        }
+
+        .uab-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.3));
+            transition: all 0.4s ease;
+        }
+
+        .uab-logo-link:hover .uab-logo-img {
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5));
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, var(--light-green), var(--uab-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .hero .subtitle {
+            font-size: 1.7rem;
+            font-weight: 300;
+            margin-bottom: 1.8rem;
+            opacity: 0.95;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero .author {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: inline-block;
+            margin: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .hero .author:hover {
+            background: rgba(255,255,255,0.18);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .author-cta-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 38px;
+            background: linear-gradient(45deg, var(--uab-gold), #ffd700);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            box-shadow: 0 10px 30px rgba(245, 184, 0, 0.4);
+            font-size: 1.1rem;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-7px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(245, 184, 0, 0.6);
+            background: linear-gradient(45deg, #ffd700, var(--uab-gold));
+        }
+
+        .cta-button:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* Enhanced Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(45, 90, 39, 0.92);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transform: translateY(-100%);
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .nav.visible {
+            transform: translateY(0);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            color: var(--uab-gold);
+        }
+
+        .nav-logo-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.7));
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo:hover .nav-logo-icon {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 3px 8px rgba(245, 184, 0, 0.6));
+        }
+
+        .nav-logo-text {
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--uab-gold);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover {
+            color: var(--uab-gold);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-links a:hover::before {
+            width: 70%;
+        }
+
+        /* Enhanced Sections */
+        .section {
+            padding: 150px 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1);
+            position: relative;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section:nth-child(even) {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .section:nth-child(odd) {
+            background: var(--white);
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+
+        .section h2 {
+            font-size: clamp(2.5rem, 5vw, 4.2rem);
+            font-weight: 800;
+            margin-bottom: 3.5rem;
+            text-align: center;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            letter-spacing: -0.02em;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 5px;
+            background: var(--gradient-primary);
+            border-radius: 3px;
+        }
+
+        .section h3 {
+            font-size: 2.2rem;
+            color: var(--primary-green);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            color: #444;
+            line-height: 1.8;
+        }
+
+        /* Enhanced Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(15px);
+            padding: 3.5rem;
+            border-radius: 25px;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            border: 1px solid rgba(255,255,255,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+            transition: all 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: var(--shadow-heavy);
+            background: rgba(255,255,255,1);
+            border-color: var(--accent-green);
+        }
+
+        .card:hover::before {
+            height: 7px;
+        }
+
+        .card h4 {
+            color: var(--primary-green);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            padding-left: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .card ul li::before {
+            content: '🌿';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .card ul li:hover {
+            transform: translateX(5px);
+            color: var(--primary-green);
+        }
+
+        .card ul li:hover::before {
+            transform: scale(1.2);
+        }
+
+        .card ul li:last-child {
+            border-bottom: none;
+        }
+
+        /* Enhanced Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin: 4rem 0;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 25px;
+            box-shadow: var(--shadow-medium);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .stat::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            animation: shimmer 4s ease-in-out infinite;
+            transform: translateZ(-10px);
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .stat:hover {
+            transform: translateY(-15px) scale(1.05) rotateX(5deg);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateZ(20px);
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+            transform: translateZ(10px);
+        }
+
+        /* Enhanced Technologies Grid */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2.5rem;
+            margin: 4rem 0;
+        }
+
+        .tech-item {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-light);
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            border: 1px solid rgba(106, 176, 76, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(106, 176, 76, 0.15), transparent);
+            transition: transform 0.7s ease;
+        }
+
+        .tech-item:hover::before {
+            transform: translateX(200%);
+        }
+
+        .tech-item:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--accent-green);
+        }
+
+        .tech-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+            transition: all 0.5s ease;
+        }
+
+        .tech-item:hover .tech-icon {
+            transform: scale(1.2);
+        }
+
+        .tech-item h4 {
+            color: var(--primary-green);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover h4 {
+            color: var(--accent-green);
+        }
+
+        .tech-item p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        /* Enhanced Table */
+        .objectives-table {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            margin: 3rem 0;
+            border: 1px solid rgba(106, 176, 76, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .objectives-table:hover {
+            box-shadow: var(--shadow-heavy);
+            transform: translateY(-10px);
+        }
+
+        .objectives-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .objectives-table th {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.8rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .objectives-table th::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: transform 0.6s ease;
+        }
+
+        .objectives-table:hover th::after {
+            transform: translateX(200%);
+        }
+
+        .objectives-table td {
+            padding: 1.8rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .objectives-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .objectives-table tbody tr:hover {
+            background: rgba(106, 176, 76, 0.08);
+            transform: translateX(5px);
+        }
+
+        .objectives-table td:first-child {
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        /* Enhanced Links */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin: 4rem 0;
+        }
+
+        .link-card {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3.5rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            box-shadow: var(--shadow-medium);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.15), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .link-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            transform: rotate(0deg);
+            transition: all 0.5s ease;
+            z-index: -2;
+        }
+
+        .link-card:hover::before {
+            opacity: 1;
+        }
+
+        .link-card:hover::after {
+            transform: rotate(180deg);
+        }
+
+        .link-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            color: white;
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .link-card h4 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .link-card h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(255,255,255,0.3);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease;
+        }
+
+        .link-card:hover h4::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .link-card p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Enhanced Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--dark) 0%, #2a2a2a 100%);
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .footer-logo-link {
+            display: inline-block;
+            width: 70px;
+            height: 70px;
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .footer-logo-link:hover {
+            transform: scale(1.2) rotateY(180deg);
+        }
+
+        .footer-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 5px 15px rgba(255,255,255,0.4));
+            transition: all 0.4s ease;
+        }
+
+        .footer-logo-link:hover .footer-logo-img {
+            filter: drop-shadow(0 10px 25px rgba(245, 184, 0, 0.8));
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            width: 28px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            border-radius: 3px;
+            transition: all 0.4s ease;
+            transform-origin: center;
+        }
+
+        .mobile-menu-btn.active span:first-child {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:last-child {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--primary-green);
+            z-index: 1000;
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            padding: 6rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            box-shadow: -5px 0 30px rgba(0,0,0,0.3);
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .mobile-nav-links li {
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .mobile-nav-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .mobile-nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+            color: var(--uab-gold);
+        }
+
+        /* Animated decorative elements */
+        .decorative-leaf {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%236ab04c"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .leaf-1 {
+            top: 20%;
+            left: 5%;
+            animation: floatLeaf 18s infinite ease-in-out;
+        }
+
+        .leaf-2 {
+            bottom: 15%;
+            right: 8%;
+            transform: rotate(45deg);
+            animation: floatLeaf 25s 2s infinite ease-in-out reverse;
+        }
+
+        .leaf-3 {
+            top: 60%;
+            left: 30%;
+            transform: rotate(-30deg) scale(0.8);
+            animation: floatLeaf 20s 1s infinite ease-in-out;
+        }
+
+        .leaf-4 {
+            bottom: 30%;
+            right: 25%;
+            transform: rotate(10deg) scale(1.2);
+            animation: floatLeaf 22s 3s infinite ease-in-out reverse;
+        }
+
+        @keyframes floatLeaf {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg); 
+            }
+            25% { 
+                transform: translateY(15px) rotate(5deg); 
+            }
+            50% { 
+                transform: translateY(0) rotate(0deg); 
+            }
+            75% { 
+                transform: translateY(-15px) rotate(-5deg); 
+            }
+        }
+
+        /* Enhanced card with hover effect */
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: white;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            border: 1px solid rgba(106, 176, 76, 0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-heavy);
+            border-color: var(--accent-green);
+        }
+
+        .feature-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .feature-card:hover .feature-card-img {
+            transform: scale(1.05);
+        }
+
+        .feature-card-content {
+            padding: 2rem;
+            flex-grow: 1;
+        }
+
+        .feature-card-title {
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-card-title {
+            color: var(--accent-green);
+        }
+
+        /* Hover Effects */
+        .hover-lift {
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Page Loader */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-animation {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .loader-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 5px solid transparent;
+            border-radius: 50%;
+            border-top-color: var(--primary-green);
+            animation: spin 1.2s linear infinite;
+        }
+
+        .loader-circle:nth-child(2) {
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            border-top-color: var(--accent-green);
+            animation-duration: 1.8s;
+            animation-direction: reverse;
+        }
+
+        .loader-circle:nth-child(3) {
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+            border-top-color: var(--uab-gold);
+            animation-duration: 1.5s;
+        }
+
+        .loader-logo {
+            position: absolute;
+            width: 40%;
+            height: 40%;
+            top: 30%;
+            left: 30%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%232d5a27"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/></svg>');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            box-shadow: 0 5px 20px rgba(45, 90, 39, 0.4);
+            border: none;
+            cursor: pointer;
+            z-index: 99;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(45, 90, 39, 0.6);
+        }
+
+        .back-to-top-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .section {
+                padding: 100px 0;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .author-cta-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .uab-logo-link {
+                width: 110px;
+                height: 110px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .section h2 {
+                font-size: 2.2rem;
+            }
+
+            .card {
+                padding: 2.5rem;
+            }
+
+            .stats {
+                gap: 2rem;
+            }
+
+            .stat {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 3.2rem;
+            }
+
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero .author {
+                font-size: 1.1rem;
+                padding: 1.2rem 1.5rem;
+            }
+
+            .cta-button {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+
+            .section h2 {
+                font-size: 1.8rem;
+            }
+
+            .section h3 {
+                font-size: 1.6rem;
+            }
+
+            .card {
+                padding: 2rem 1.5rem;
+            }
+
+            .tech-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .tech-item {
+                padding: 1.8rem 1rem;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            animation: fadeIn 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        /* Animation utilities */
+        .animate-delay-100 { animation-delay: 0.1s; }
+        .animate-delay-200 { animation-delay: 0.2s; }
+        .animate-delay-300 { animation-delay: 0.3s; }
+        .animate-delay-400 { animation-delay: 0.4s; }
+        .animate-delay-500 { animation-delay: 0.5s; }
+
+        /* Force removal of white circles */
+        .nav-logo-icon, .footer-logo-img, .footer-logo-link {
+            background: transparent !important;
+            background-color: transparent !important;
+            border-radius: 0 !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        .nav-logo-icon::before, .nav-logo-icon::after,
+        .footer-logo-img::before, .footer-logo-img::after {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-animation">
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+            <div class="loader-logo"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="container">
+            <div class="nav-container">
+                <a href="https://poltorprogrammer.github.io/Memoria_TFG_Maig_2025/Eines_Centraleta.html" class="nav-logo">
+                    <img src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_TFG_LLETRA.png" alt="Logo Galeria Botànica" class="nav-logo-icon">
+                    <span class="nav-logo-text">Galeria Botànica UAB</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#objectius">Objectius</a></li>
+                    <li><a href="#desenvolupament">Desenvolupament</a></li>
+                    <li><a href="#resultats">Resultats</a></li>
+                    <li><a href="#tecnologies">Tecnologies</a></li>
+                    <li><a href="#enllacos">Enllaços</a></li>
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Menú mòbil">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <ul class="mobile-nav-links">
+            <li><a href="#objectius">Objectius</a></li>
+            <li><a href="#desenvolupament">Desenvolupament</a></li>
+            <li><a href="#resultats">Resultats</a></li>
+            <li><a href="#tecnologies">Tecnologies</a></li>
+            <li><a href="#enllacos">Enllaços</a></li>
+        </ul>
+    </div>
+
+    <!-- Decorative Elements -->
+    <div class="decorative-leaf leaf-1"></div>
+    <div class="decorative-leaf leaf-2"></div>
+    <div class="decorative-leaf leaf-3"></div>
+    <div class="decorative-leaf leaf-4"></div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <a href="https://poltorprogrammer.github.io/Memoria_TFG_Maig_2025/Eines_Centraleta.html">
+                    <img src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_TFG_LLETRA.png" alt="Logo UAB" class="uab-logo-img">
+                </a>
+                <h1>Galeria i Mapa Botànic<br>del Campus UAB</h1>
+                <p class="subtitle">Ecosistema digital per a la catalogació interactiva de la biodiversitat vegetal</p>
+                <div class="author-cta-container">
+                    <div class="author">
+                        <strong>Tomás González Bartomeu</strong><br>
+                        <span style="opacity: 0.8;">Tutor: Ramon Pérez Obiol</span><br>
+                        <span style="opacity: 0.7;">Grau en Biologia Ambiental • Maig 2025</span>
+                    </div>
+                    <a href="#objectius" class="cta-button">
+                        <span>Descobreix el Projecte</span>
+                        <span style="font-size: 1.2rem;">🌿</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introducció -->
+    <section class="section" id="introduccio">
+        <div class="container">
+            <h2>Introducció al Projecte</h2>
+            <p style="font-size: 1.3rem; text-align: center; max-width: 900px; margin: 0 auto 4rem; color: #444; line-height: 1.8;">
+                La biodiversitat vegetal del campus de la UAB representa un patrimoni natural i educatiu de gran valor, 
+                amb funció de corredor biològic entre espais naturals propers. Aquest projecte desenvolupa una eina 
+                digital moderna per catalogar i difondre la flora del campus utilitzant tecnologies obertes.
+            </p>
+
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number" data-target="300">0</span>
+                    <span class="stat-label">Espècies Catalogades</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-target="260">0</span>
+                    <span class="stat-label">Hectàrees Campus</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-target="95">0</span>
+                    <span class="stat-label">Puntuació SUS</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-target="90">0</span>
+                    <span class="stat-label">Usuaris Avaluació</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Objectius -->
+    <section class="section" id="objectius">
+        <div class="container">
+            <h2>Objectius del Projecte</h2>
+            
+            <div class="card" style="margin-bottom: 4rem; text-align: center;">
+                <h3>🎯 Objectiu General</h3>
+                <p style="font-size: 1.2rem; line-height: 1.8;">
+                    Dissenyar i implementar un <strong>ecosistema digital basat en tecnologies obertes</strong> 
+                    que permeti catalogar, gestionar i divulgar la biodiversitat vegetal del campus de la 
+                    Universitat Autònoma de Barcelona de manera <strong>interactiva i accessible</strong>.
+                </p>
+            </div>
+
+            <div class="objectives-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Objectiu</th>
+                            <th>Descripció</th>
+                            <th>Estat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>OE-1</td>
+                            <td>Plugin WordPress amb galeria filtrable i mapa interactiu Leaflet</td>
+                            <td style="color: #28a745; font-weight: 700;">✅ Assolit 100%</td>
+                        </tr>
+                        <tr>
+                            <td>OE-2</td>
+                            <td>Aplicació gestió catàleg amb File System Access API</td>
+                            <td style="color: #28a745; font-weight: 700;">✅ Completat</td>
+                        </tr>
+                        <tr>
+                            <td>OE-3</td>
+                            <td>Base de dades amb mínim 150 espècies del campus</td>
+                            <td style="color: #28a745; font-weight: 700;">✅ >300 espècies</td>
+                        </tr>
+                        <tr>
+                            <td>OE-4</td>
+                            <td>Avaluació usabilitat SUS ≥80 amb 50+ usuaris</td>
+                            <td style="color: #28a745; font-weight: 700;">✅ SUS >94 (90 usuaris)</td>
+                        </tr>
+                        <tr>
+                            <td>OE-5</td>
+                            <td>Aplicació d'edició integrada amb funcionalitats CRUD</td>
+                            <td style="color: #28a745; font-weight: 700;">✅ Revisat i provat</td>
+                        </tr>
+                        <tr>
+                            <td>OE-6</td>
+                            <td>Memòria TFG i defensa oral dins del termini oficial</td>
+                            <td style="color: #28a745; font-weight: 700;">✅ Completat</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Desenvolupament -->
+    <section class="section" id="desenvolupament">
+        <div class="container">
+            <h2>Desenvolupament del Sistema</h2>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🔌 Plugin WordPress</h3>
+                    <h4>Shortcodes Implementats:</h4>
+                    <ul>
+                        <li><code>[galeria_botanica]</code> - Galeria visual filtrable</li>
+                        <li><code>[mapa_botanica]</code> - Mapa interactiu Leaflet</li>
+                    </ul>
+                    <h4>Funcionalitats Avançades:</h4>
+                    <ul>
+                        <li>Filtres dinàmics per família, hàbitat i colors</li>
+                        <li>Cerca instantània amb autocompletat</li>
+                        <li>Lazy-loading d'imatges optimitzat</li>
+                        <li>Deep-linking per compartir espècies</li>
+                        <li>Disseny responsive i accessible</li>
+                        <li>Lightbox amb navegació per teclat</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>⚙️ Gestor de Catàleg</h3>
+                    <h4>Gestió Local Avançada:</h4>
+                    <ul>
+                        <li>Edició local de plantes.json</li>
+                        <li>Validació en temps real de camps</li>
+                        <li>Gestió d'imatges amb drag-and-drop</li>
+                        <li>Mapa Leaflet integrat per coordenades</li>
+                        <li>File System Access API opcional</li>
+                        <li>Treball offline complet</li>
+                        <li>Previsualització instantània</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 4rem;">
+                <h3>📊 Arquitectura del Model de Dades</h3>
+                <div class="grid-3">
+                    <div>
+                        <h4>🏷️ Identificació Taxonòmica</h4>
+                        <ul>
+                            <li>Identificador únic (slug)</li>
+                            <li>Nom comú català</li>
+                            <li>Nom científic binomial</li>
+                            <li>Família botànica</li>
+                            <li>Tipus vital (arbre, arbust, etc.)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>🌱 Característiques Biològiques</h4>
+                        <ul>
+                            <li>Hàbitat preferent</li>
+                            <li>Període de floració</li>
+                            <li>Tipus de fullatge</li>
+                            <li>Alçada màxima</li>
+                            <li>Colors representatius</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>📍 Dades Espacials</h4>
+                        <ul>
+                            <li>Coordenades GPS múltiples</li>
+                            <li>Visualització en mapa</li>
+                            <li>Clustering automàtic</li>
+                            <li>Pop-ups informatius</li>
+                            <li>Navegació entre punts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resultats -->
+    <section class="section" id="resultats">
+        <div class="container">
+            <h2>Resultats de l'Avaluació</h2>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <h3>📈 Avaluació d'Usabilitat (SUS)</h3>
+                    <div class="stats" style="margin: 2rem 0;">
+                        <div class="stat">
+                            <span class="stat-number">94.66</span>
+                            <span class="stat-label">Puntuació Galeria</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">95.21</span>
+                            <span class="stat-label">Puntuació Mapa</span>
+                        </div>
+                    </div>
+                    <div style="background: rgba(40, 167, 69, 0.1); padding: 1.8rem; border-radius: 15px; margin-top: 2rem; border-left: 4px solid #28a745;">
+                        <p><strong>🏆 Qualificació:</strong> A+ (Excel·lent++)</p>
+                        <p><strong>👥 Participants:</strong> 90 usuaris (61 UAB, 29 externs)</p>
+                        <p><strong>⭐ Punts forts destacats:</strong></p>
+                        <ul style="margin-top: 1rem;">
+                            <li>Disseny visual "molt atractiu"</li>
+                            <li>Filtres "molt clars i intuïtius"</li>
+                            <li>Mapa "fàcil de navegar"</li>
+                            <li>Velocitat de càrrega excel·lent</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>⚡ Rendiment Tècnic</h3>
+                    <div style="background: rgba(45, 90, 39, 0.1); padding: 1.8rem; border-radius: 15px; margin-bottom: 2rem; border-left: 4px solid var(--primary-green);">
+                        <h4 style="color: var(--primary-green); margin-bottom: 1rem;">🚀 Temps de Càrrega</h4>
+                        <ul>
+                            <li><strong>TTI Galeria:</strong> 2.4 segons</li>
+                            <li><strong>TTI Mapa:</strong> 2.9 segons</li>
+                            <li><strong>Lighthouse Score:</strong> >90/100</li>
+                        </ul>
+                    </div>
+                    
+                    <h4>✅ Compatibilitat i Accessibilitat</h4>
+                    <ul>
+                        <li>Chrome, Firefox, Edge, Safari</li>
+                        <li>Responsive design ≥360px</li>
+                        <li>Navegació per teclat completa</li>
+                        <li>Alt text per a totes les imatges</li>
+                        <li>Contrast WCAG AA compliant</li>
+                        <li>Screen reader friendly</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tecnologies -->
+    <section class="section" id="tecnologies">
+        <div class="container">
+            <h2>Stack Tecnològic</h2>
+            
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <span class="tech-icon">📝</span>
+                    <h4>WordPress 6.5</h4>
+                    <p>CMS base per al plugin i gestió de continguts</p>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">🗺️</span>
+                    <h4>Leaflet 1.9</h4>
+                    <p>Llibreria JavaScript per mapes interactius</p>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">🎨</span>
+                    <h4>Tailwind CSS 3</h4>
+                    <p>Framework CSS utility-first per disseny</p>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">💻</span>
+                    <h4>JavaScript ES6+</h4>
+                    <p>Interactivitat client-side moderna</p>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">📂</span>
+                    <h4>File System API</h4>
+                    <p>Gestió de fitxers locals al navegador</p>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">🐍</span>
+                    <h4>Python 3.12</h4>
+                    <p>Scripts d'anàlisi de dades SUS</p>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">📊</span>
+                    <h4>JSON Schema</h4>
+                    <p>Validació i estructura de dades</p>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">🔧</span>
+                    <h4>VS Code + Git</h4>
+                    <p>Entorn de desenvolupament integrat</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enllaços -->
+    <section class="section" id="enllacos">
+        <div class="container">
+            <h2>Recursos i Enllaços</h2>
+            
+            <div class="links-grid">
+                <a href="https://github.com/PoltorProgrammer/GaleriaBotanicaMaig2025/tree/main" class="link-card" target="_blank">
+                    <h4>📁 Repositori GitHub</h4>
+                    <p>Codi font complet del plugin WordPress, aplicació de gestió i documentació tècnica del projecte</p>
+                </a>
+
+                <a href="https://poltorprogrammer.github.io/TFG_Galeria_Botanica_Maig_2025" class="link-card" target="_blank">
+                    <h4>🚀 Demostració en Viu</h4>
+                    <p>Prova interactiva de la galeria botànica i mapa del campus amb totes les funcionalitats implementades</p>
+                </a>
+
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSf-ovmBzQeFW-0ZoAeZ-UtwspY84UZt4y8vBluaQiYTSYq2tA/viewform" class="link-card" target="_blank">
+                    <h4>📋 Enquesta d'Usabilitat</h4>
+                    <p>Formulari Google Forms amb l'escala SUS utilitzada per avaluar l'experiència d'usuari del sistema</p>
+                </a>
+
+                <a href="https://github.com/PoltorProgrammer/Analisi_SUS" class="link-card" target="_blank">
+                    <h4>📊 Anàlisi de Resultats</h4>
+                    <p>Scripts Python i informe detallat de l'anàlisi estadístic dels resultats de l'avaluació SUS</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusions -->
+    <section class="section">
+        <div class="container">
+            <h2>Conclusions i Impacte</h2>
+            
+            <div class="card" style="margin-bottom: 4rem; text-align: center;">
+                <h3>🎯 Assoliments Principals</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div style="background: rgba(45, 90, 39, 0.1); padding: 1.8rem; border-radius: 15px; transition: all 0.3s ease;" class="hover-lift">
+                        <h4 style="color: var(--primary-green);">🌐 Ecosistema Complet</h4>
+                        <p>Plugin WordPress + Aplicació de gestió integrada amb tecnologies obertes</p>
+                    </div>
+                    <div style="background: rgba(45, 90, 39, 0.1); padding: 1.8rem; border-radius: 15px; transition: all 0.3s ease;" class="hover-lift">
+                        <h4 style="color: var(--primary-green);">🌿 Catàleg Extens</h4>
+                        <p>Més de 300 espècies geolocalitzades amb fitxes completes i imatges</p>
+                    </div>
+                    <div style="background: rgba(45, 90, 39, 0.1); padding: 1.8rem; border-radius: 15px; transition: all 0.3s ease;" class="hover-lift">
+                        <h4 style="color: var(--primary-green);">⭐ Usabilitat Excel·lent</h4>
+                        <p>Puntuacions SUS >94 (A+ segons escala adjectiva de Bangor)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🔮 Línies de Treball Futur</h3>
+                    <ul style="line-height: 2;">
+                        <li><strong>Optimització tècnica:</strong> Miniatures WebP automàtiques</li>
+                        <li><strong>API pública:</strong> Integració amb apps mòbils</li>
+                        <li><strong>Col·laboració:</strong> Control de versions amb Git</li>
+                        <li><strong>Internacionalització:</strong> Suport multiidioma</li>
+                        <li><strong>PWA:</strong> Funcionalitats offline avançades</li>
+                        <li><strong>Educació:</strong> Materials didàctics integrats</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>💡 Impacte i Sostenibilitat</h3>
+                    <p style="line-height: 1.8; margin-bottom: 1.8rem;">
+                        Aquest projecte demostra que amb una combinació intel·ligent de <strong>tecnologies web obertes</strong> 
+                        i una metodologia centrada en l'usuari es pot crear una eina robusta i atractiva per la 
+                        <strong>divulgació del patrimoni natural universitari</strong>.
+                    </p>
+                    <div style="background: rgba(245, 184, 0, 0.1); padding: 1.8rem; border-radius: 15px; border-left: 4px solid var(--uab-gold);">
+                        <p><strong>🏛️ Model Replicable:</strong> La plataforma pot servir com a referència per altres 
+                        institucions interessades a posar en valor el seu patrimoni natural local.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <a href="https://poltorprogrammer.github.io/Memoria_TFG_Maig_2025/Eines_Centraleta.html" class="footer-logo-link">
+                    <img src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_TFG_LLETRA.png" alt="Logo Galeria Botànica" class="footer-logo-img">
+                </a>
+                <p style="font-size: 1.1rem; font-weight: 500;">&copy; 2025 Tomás González Bartomeu</p>
+                <p style="opacity: 0.8;">TFG Grau en Biologia Ambiental • Universitat Autònoma de Barcelona</p>
+                <p style="font-size: 1.2rem; margin-top: 1rem;">🌿 Galeria i Mapa Botànic del Campus UAB 🌿</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button class="back-to-top" id="backToTop" aria-label="Tornar a dalt">
+        <span class="back-to-top-icon">↑</span>
+    </button>
+
+    <script>
+        // Page Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.page-loader').classList.add('hidden');
+            }, 800);
+        });
+
+        // Enhanced navigation scroll effect
+        let lastScrollY = window.scrollY;
+        const nav = document.getElementById('nav');
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            // Navigation visibility
+            if (currentScrollY > 100) {
+                nav.classList.add('visible');
+            } else {
+                nav.classList.remove('visible');
+            }
+            
+            // Back to top button visibility
+            if (currentScrollY > 600) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+            
+            lastScrollY = currentScrollY;
+        });
+
+        // Back to top functionality
+        document.getElementById('backToTop').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNav = document.querySelector('.mobile-nav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+        });
+
+        // Smooth scrolling with offset
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced Intersection Observer for animations
+        const sections = document.querySelectorAll('.section');
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Trigger counter animation if this is the stats section
+                    if (entry.target.querySelector('.stats')) {
+                        animateCounters();
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Enhanced counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number[data-target]');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += step;
+                        const value = Math.min(Math.ceil(current), target);
+                        counter.textContent = value + (target === 95 ? '+' : target === 300 ? '+' : '');
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target + (target === 95 ? '+' : target === 300 ? '+' : '');
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+
+        // Enhanced parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            
+            if (hero && scrolled < window.innerHeight) {
+                const rate = scrolled * 0.35;
+                hero.style.transform = `translateY(${rate}px)`;
+                
+                // Parallax for decorative elements
+                document.querySelectorAll('.decorative-leaf').forEach((leaf, index) => {
+                    const speed = 0.2 + (index * 0.05);
+                    leaf.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            }
+        });
+
+        // Add loading state to external links
+        document.querySelectorAll('a[target="_blank"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const originalText = this.innerHTML;
+                this.innerHTML = originalText + ' <span class="loading"></span>';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2000);
+            });
+        });
+
+        // Easter egg: click UAB logo 5 times for rainbow effect
+        let clickCount = 0;
+        document.querySelector('.uab-logo-link').addEventListener('click', () => {
+            clickCount++;
+            if (clickCount === 5) {
+                document.body.style.animation = 'rainbow 2s ease-in-out';
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                    clickCount = 0;
+                }, 2000);
+            }
+        });
+
+        // Add rainbow animation for Easter egg
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rainbow {
+                0% { filter: hue-rotate(0deg); }
+                25% { filter: hue-rotate(90deg); }
+                50% { filter: hue-rotate(180deg); }
+                75% { filter: hue-rotate(270deg); }
+                100% { filter: hue-rotate(360deg); }
+            }
+            .no-scroll {
+                overflow: hidden;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Animated hover effects for cards
+        document.querySelectorAll('.card, .tech-item, .link-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+            });
+        });
+
+        // Initialize all hover-lift elements
+        document.querySelectorAll('.hover-lift').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+                this.style.boxShadow = '0 8px 30px rgba(0,0,0,0.12)';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        console.log('🌿 Galeria Botànica UAB - TFG Tomás González Bartomeu 2025');
+    </script>
+</body>
+</html>

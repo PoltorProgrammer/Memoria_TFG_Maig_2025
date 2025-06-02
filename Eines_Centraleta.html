@@ -13,6 +13,7 @@
             --accent-color: #f9a825;
             --text-dark: #2c3e50;
             --text-light: #ffffff;
+            --repo-color: #0d1117;
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
@@ -80,10 +81,59 @@
             margin: 20px auto;
         }
         
-        .container {
+        .section {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px 60px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .section-title.deployers::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 1.5px;
+        }
+        
+        .section-title.repositories::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--repo-color);
+            border-radius: 1.5px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            opacity: 0.7;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 40px;
@@ -98,14 +148,26 @@
             transition: var(--transition);
             position: relative;
             cursor: pointer;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
         }
         
         .item:hover {
             transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
         }
         
         .item:hover .item-img {
             transform: scale(1.05);
+        }
+        
+        .item.repo {
+            background: rgba(13, 17, 23, 0.05);
+        }
+        
+        .item.repo:hover {
+            background: rgba(13, 17, 23, 0.1);
         }
         
         .item-img {
@@ -125,6 +187,10 @@
             padding-bottom: 15px;
         }
         
+        .item-title.repo-title {
+            color: var(--repo-color);
+        }
+        
         .item-title::after {
             content: '';
             position: absolute;
@@ -137,11 +203,37 @@
             border-radius: 1.5px;
         }
         
+        .item-title.repo-title::after {
+            background-color: var(--repo-color);
+        }
+        
         .item-description {
             color: var(--text-dark);
             opacity: 0.8;
             margin-bottom: 20px;
             font-size: 0.95rem;
+        }
+        
+        .item-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-deployed {
+            background: linear-gradient(45deg, var(--accent-color), #fbc02d);
+            color: var(--text-dark);
+        }
+        
+        .badge-repo {
+            background: linear-gradient(45deg, var(--repo-color), #333);
+            color: var(--text-light);
         }
         
         .floating-logo {
@@ -200,6 +292,10 @@
                 font-size: 1rem;
             }
             
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
             .container {
                 grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
                 gap: 30px;
@@ -230,8 +326,11 @@
                 padding: 0 15px;
             }
             
+            .section {
+                padding: 0 15px;
+            }
+            
             .container {
-                padding: 0 15px 40px;
                 grid-template-columns: 1fr;
             }
             
@@ -257,24 +356,16 @@
             }
         }
         
-        .header-content, .item {
+        .header-content, .section {
             animation: fadeInUp 0.8s ease forwards;
         }
         
-        .item:nth-child(2) {
+        .section:nth-child(2) {
             animation-delay: 0.1s;
         }
         
-        .item:nth-child(3) {
+        .section:nth-child(3) {
             animation-delay: 0.2s;
-        }
-        
-        .item:nth-child(4) {
-            animation-delay: 0.3s;
-        }
-        
-        .item:nth-child(5) {
-            animation-delay: 0.4s;
         }
     </style>
 </head>
@@ -290,37 +381,84 @@
         </div>
     </header>
     
-    <div class="container">
-        <div class="item" onclick="window.open('https://poltorprogrammer.github.io/Editor_Dades_Galeria/', '_blank')">
-            <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_EDITOR_GALERIA_MAPA.png" alt="Editor de galeria botànica">
-            <h2 class="item-title">Editor de Galeria Botànica</h2>
-            <p class="item-description">Eina per gestionar i editar el contingut de la galeria botànica del campus. Afegeix noves espècies, actualitza informació i organitza el catàleg.</p>
-        </div>
+    <!-- Secció Deployers -->
+    <section class="section">
+        <h2 class="section-title deployers">Deployers</h2>
+        <p class="section-subtitle">Aplicacions web desplegades i funcionals</p>
         
-        <div class="item" onclick="window.open('https://poltorprogrammer.github.io/TFG_Galeria_Botanica_Maig_2025/', '_blank')">
-            <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_GALERIA_MAPA.png" alt="Galeria i Mapa Botànic">
-            <h2 class="item-title">Galeria i Mapa Botànic</h2>
-            <p class="item-description">Explora la diversitat botànica del campus de la UAB a través d'una galeria interactiva i un mapa detallat amb la ubicació de cada espècie.</p>
+        <div class="container">
+            <div class="item" onclick="window.open('https://poltorprogrammer.github.io/Editor_Dades_Galeria/', '_blank')">
+                <div class="item-badge badge-deployed">Deployed</div>
+                <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_EDITOR_GALERIA_MAPA.png" alt="Editor de galeria botànica">
+                <h3 class="item-title">Editor de Galeria Botànica</h3>
+                <p class="item-description">Eina per gestionar i editar el contingut de la galeria botànica del campus. Afegeix noves espècies, actualitza informació i organitza el catàleg.</p>
+            </div>
+            
+            <div class="item" onclick="window.open('https://poltorprogrammer.github.io/TFG_Galeria_Botanica_Maig_2025/', '_blank')">
+                <div class="item-badge badge-deployed">Deployed</div>
+                <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_GALERIA_MAPA.png" alt="Galeria i Mapa Botànic">
+                <h3 class="item-title">Galeria i Mapa Botànic</h3>
+                <p class="item-description">Explora la diversitat botànica del campus de la UAB a través d'una galeria interactiva i un mapa detallat amb la ubicació de cada espècie.</p>
+            </div>
+            
+            <div class="item" onclick="window.open('https://poltorprogrammer.github.io/Analisi_SUS/informe_sus.html', '_blank')">
+                <div class="item-badge badge-deployed">Deployed</div>
+                <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_SUS.png" alt="SUS">
+                <h3 class="item-title">System Usability Scale</h3>
+                <p class="item-description">Eina d'avaluació de la usabilitat del sistema. Contribueix a la millora contínua del projecte mitjançant la teva valoració i comentaris.</p>
+            </div>
+            
+            <div class="item" onclick="window.open('https://poltorprogrammer.github.io/Memoria_TFG_Maig_2025/Memoria_Digital.html', '_blank')">
+                <div class="item-badge badge-deployed">Deployed</div>
+                <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_MEMORIA.png" alt="Memòria del projecte">
+                <h3 class="item-title">Memòria del Projecte</h3>
+                <p class="item-description">Document complet amb tota la informació sobre el desenvolupament del projecte, objectius, metodologia i resultats obtinguts.</p>
+            </div>
         </div>
+    </section>
+    
+    <!-- Secció Repositoris -->
+    <section class="section">
+        <h2 class="section-title repositories">Repositoris</h2>
+        <p class="section-subtitle">Codi font i documentació tècnica dels projectes</p>
         
-        <div class="item" onclick="window.open('https://github.com/PoltorProgrammer/Plugin_Worpress_Galeria_Mapa/tree/main', '_blank')">
-            <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_INATALACIO_WORDPRESS.png" alt="Guia d'instal·lació WordPress">
-            <h2 class="item-title">Guia d'Instal·lació WordPress</h2>
-            <p class="item-description">Manual pas a pas per a la instal·lació i configuració del sistema WordPress per al projecte de Galeria i Mapa Botànic del campus.</p>
+        <div class="container">
+            <div class="item repo" onclick="window.open('https://github.com/PoltorProgrammer/Plugin_Worpress_Galeria_Mapa/tree/main', '_blank')">
+                <div class="item-badge badge-repo">Repository</div>
+                <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_INATALACIO_WORDPRESS.png" alt="Guia d'instal·lació WordPress">
+                <h3 class="item-title repo-title">Guia d'Instal·lació WordPress</h3>
+                <p class="item-description">Manual pas a pas per a la instal·lació i configuració del sistema WordPress per al projecte de Galeria i Mapa Botànic del campus.</p>
+            </div>
+            
+            <div class="item repo" onclick="window.open('https://github.com/PoltorProgrammer/Editor_Dades_Galeria', '_blank')">
+                <div class="item-badge badge-repo">Repository</div>
+                <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_EDITOR_GALERIA_MAPA.png" alt="Editor de galeria botànica - Repositori">
+                <h3 class="item-title repo-title">Editor de Galeria Botànica</h3>
+                <p class="item-description">Codi font de l'eina per gestionar i editar el contingut de la galeria botànica. Inclou documentació tècnica i instruccions d'instal·lació.</p>
+            </div>
+            
+            <div class="item repo" onclick="window.open('https://github.com/PoltorProgrammer/TFG_Galeria_Botanica_Maig_2025', '_blank')">
+                <div class="item-badge badge-repo">Repository</div>
+                <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_GALERIA_MAPA.png" alt="Galeria i Mapa Botànic - Repositori">
+                <h3 class="item-title repo-title">Galeria i Mapa Botànic</h3>
+                <p class="item-description">Repositori principal del projecte amb el codi font de la galeria interactiva i el mapa botànic del campus de la UAB.</p>
+            </div>
+            
+            <div class="item repo" onclick="window.open('https://github.com/PoltorProgrammer/Analisi_SUS', '_blank')">
+                <div class="item-badge badge-repo">Repository</div>
+                <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_SUS.png" alt="SUS - Repositori">
+                <h3 class="item-title repo-title">System Usability Scale</h3>
+                <p class="item-description">Implementació de l'eina d'avaluació SUS per mesurar la usabilitat del sistema. Inclou anàlisi estadístic i generació d'informes.</p>
+            </div>
+            
+            <div class="item repo" onclick="window.open('https://github.com/PoltorProgrammer/Memoria_TFG_Maig_2025', '_blank')">
+                <div class="item-badge badge-repo">Repository</div>
+                <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_MEMORIA.png" alt="Memòria del projecte - Repositori">
+                <h3 class="item-title repo-title">Memòria del Projecte</h3>
+                <p class="item-description">Repositori amb la documentació completa del projecte, incloent la memòria digital, recursos, imatges i materials complementaris.</p>
+            </div>
         </div>
-        
-        <div class="item" onclick="window.open('https://poltorprogrammer.github.io/Analisi_SUS/informe_sus.html', '_blank')">
-            <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_SUS.png" alt="SUS">
-            <h2 class="item-title">System Usability Scale</h2>
-            <p class="item-description">Eina d'avaluació de la usabilitat del sistema. Contribueix a la millora contínua del projecte mitjançant la teva valoració i comentaris.</p>
-        </div>
-        
-        <div class="item" onclick="window.open('https://poltorprogrammer.github.io/Memoria_TFG_Maig_2025/Memoria_Digital.html', '_blank')">
-            <img class="item-img" src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_MEMORIA.png" alt="Memòria del projecte">
-            <h2 class="item-title">Memòria del Projecte</h2>
-            <p class="item-description">Document complet amb tota la informació sobre el desenvolupament del projecte, objectius, metodologia i resultats obtinguts.</p>
-        </div>
-    </div>
+    </section>
 
     <a href="#" class="floating-logo-container">
         <img src="https://raw.githubusercontent.com/PoltorProgrammer/Memoria_TFG_Maig_2025/refs/heads/main/imatges/LOGO_TFG_LLETRA.png" alt="Logo UAB Botànic" class="floating-logo">

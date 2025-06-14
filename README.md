@@ -73,5 +73,5 @@ Consulta el fitxer `LICENSE` per més detalls.
 
 ## 🙌 Agraïments
 
-Gràcies al tutor **Ramon Pérez Obiol** i a tots els participants que han ajudat en l’avaluació i desenvolupament del projecte.  
+Gràcies al tutor **** **** **** i a tots els participants que han ajudat en l’avaluació i desenvolupament del projecte.  
 🌱 Aquest projecte vol posar en valor el patrimoni natural de la UAB i servir de model replicable per a altres institucions.

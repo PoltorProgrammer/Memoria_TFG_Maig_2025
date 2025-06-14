@@ -1,7 +1,7 @@
 # 🌿 Galeria i Mapa Botànic del Campus UAB
 
 **Autor:** Tomás González Bartomeu  
-**Tutor:** Ramon Pérez Obiol  
+**Tutor:** **** **** ****  
 **Grau:** Biologia Ambiental, Universitat Autònoma de Barcelona  
 **Data:** Maig 2025
 
